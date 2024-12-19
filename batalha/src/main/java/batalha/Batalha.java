@@ -70,9 +70,11 @@ public class Batalha {
 	}
 
 	static int calcularChanceEvasao(int velocidadeAtacante, int velocidadeDefensor) {
-		int chanceEvasao = min(50, (velocidadeDefensor - velocidadeAtacante) * 2);
+		int diferenca = velocidadeDefensor - velocidadeAtacante;
+        int chanceEvasao = (int) Math.max(0, Math.min(50, (diferenca / 4.0) * 50));
 		return chanceEvasao < 0 ? 0 : chanceEvasao;
 	}
+	
 
 	public boolean temVencedor() {
 		if (primeiroAtacante.getVida() <= 0){

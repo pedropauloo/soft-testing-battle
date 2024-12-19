@@ -8,7 +8,17 @@ public class Guerreiro extends Personagem {
 
 	@Override
 	final void checarRegraDeClasse() {
-		// TODO Auto-generated method stub
+		if (getAtaque() < getResistencia()) {
+            throw new IllegalArgumentException("Ataque deve ser maior ou igual à Resistencia.");
+        }
+        if (getResistencia() < getAtaque()) {
+            throw new IllegalArgumentException("Resistencia deve ser maior ou igual ao Ataque.");
+        }
+        if (getVelocidade() > getAtaque() || getVelocidade() > getResistencia()) {
+            throw new IllegalArgumentException("Velocidade deve ser menor ou igual a Ataque e Resistencia.");
+        }
+        if (getDefesa() > getAtaque() || getDefesa() > getResistencia()) {
+            throw new IllegalArgumentException("Defesa deve ser menor ou igual a Ataque e Resistencia.");
+        }
 	}
-
 }

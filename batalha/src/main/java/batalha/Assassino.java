@@ -8,6 +8,17 @@ public class Assassino extends Personagem {
 
 	@Override
 	final void checarRegraDeClasse() {
-		// TODO Auto-generated method stub
+		if (getAtaque() < getVelocidade()) {
+            throw new IllegalArgumentException("Ataque deve ser maior ou igual à Velocidade.");
+        }
+        if (getVelocidade() < getAtaque()) {
+            throw new IllegalArgumentException("Velocidade deve ser maior ou igual ao Ataque.");
+        }
+        if (getResistencia() > getAtaque() || getResistencia() > getVelocidade()) {
+            throw new IllegalArgumentException("Resistência deve ser menor ou igual a Ataque e Velocidade.");
+        }
+        if (getDefesa() > getAtaque() || getDefesa() > getVelocidade()) {
+            throw new IllegalArgumentException("Defesa deve ser menor ou igual a Ataque e Velocidade.");
+        }
 	}
 }

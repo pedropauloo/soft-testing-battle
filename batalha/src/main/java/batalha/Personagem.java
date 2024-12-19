@@ -19,10 +19,10 @@ public abstract class Personagem {
 		this.defesa = defesa;
 		this.velocidade = velocidade;
 		this.resistencia = resistencia;
-
+		
+		checarRegraDeClasse();
 		checarTotal();
 		checarValorMinimo();
-		checarRegraDeClasse();
 
 		this.vida = 5 * this.resistencia;
 	}
@@ -37,7 +37,9 @@ public abstract class Personagem {
 	}
 
 	final void checarValorMinimo(Integer atributo) {
-		// TODO
+		if (ataque < 3 || defesa < 3 || velocidade < 3 || resistencia < 3) {
+			throw new IllegalArgumentException("Todos os atributos devem ser no mínimo 3.");
+		}
 	}
 
 	final void checarTotal() {

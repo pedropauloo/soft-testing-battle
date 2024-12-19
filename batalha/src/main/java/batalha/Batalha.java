@@ -75,7 +75,16 @@ public class Batalha {
 	}
 
 	public boolean temVencedor() {
-		// TODO implementar a lógica
+		if (primeiroAtacante.getVida() <= 0){
+			// Informar que o segundo atacante venceu
+			System.out.println(segundoAtacante.getClass() + " venceu!");
+			return true; // O segundo atacante é o vencedor
+		}
+		if (segundoAtacante.getVida() <= 0) {
+			// Informar que o primeiro atacante venceu
+			System.out.println(primeiroAtacante.getClass().getSimpleName() + " venceu!");
+			return true; // O primeiro atacante é o vencedor
+		}
 		return false;
 	}
 

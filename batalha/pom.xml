@@ -6,11 +6,16 @@
 	<groupId>teste101</groupId>
 	<artifactId>batalha</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>demo</module>
+	</modules>
 	<name>Batalhas</name>
 	<description>Trabalho de Testes, Projeto Batalhas</description>
 
 	<dependencies>
 		<dependency>
+
 			<groupId>org.junit.platform</groupId>
 			<artifactId>junit-platform-suite</artifactId>
 			<version>${junit-platform.version}</version>

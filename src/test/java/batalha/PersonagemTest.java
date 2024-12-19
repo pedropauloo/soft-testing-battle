@@ -1,0 +1,4 @@
+package batalha;
+
+class PersonagemTest {
+}

@@ -27,7 +27,7 @@ public class Interface {
 
     static void exibirAtaque(Personagem atacante, Personagem defensor, int dano, boolean eGolpeCritico) {
         try {
-            String golpeCritico = eGolpeCritico ? " com golpe crítico" : "";
+            String golpeCritico = eGolpeCritico ? " (Golpe Crítico)" : "";
             String jogadorAtacante = atacante.getJogador() + " (" + atacante.getClass().getSimpleName() + ")";
             String jogadorDefensor = defensor.getJogador() + " (" + defensor.getClass().getSimpleName() + ")";
 

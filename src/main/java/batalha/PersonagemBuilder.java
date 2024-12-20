@@ -40,11 +40,19 @@ public class PersonagemBuilder {
     }
 
     public Assassino doTipoAssassino() throws IllegalArgumentException {
-        return new Assassino(ataque, defesa, velocidade, resistencia, jogador);
+        if (jogador != null) {
+            return new Assassino(ataque, defesa, velocidade, resistencia, jogador);
+        } else {
+            return new Assassino(ataque, defesa, velocidade, resistencia);
+        }
     }
 
     public Guerreiro doTipoGuerreiro() throws IllegalArgumentException {
-        return new Guerreiro(ataque, defesa, velocidade, resistencia, jogador);
+        if (jogador != null) {
+            return new Guerreiro(ataque, defesa, velocidade, resistencia, jogador);
+        } else {
+            return new Guerreiro(ataque, defesa, velocidade, resistencia);
+        }
     }
 
 

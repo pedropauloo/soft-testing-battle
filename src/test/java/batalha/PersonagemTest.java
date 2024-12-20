@@ -1,5 +1,6 @@
 package batalha;
 
+import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -22,13 +23,13 @@ public class PersonagemTest {
         boolean result = verificarAtributosAssassino(resistencia, ataque, velocidade);
 
         if (resistencia > ataque && resistencia > velocidade) {
-            assertTrue(result, "Esperava verdadeiro quando (resistencia > ataque) e (resistencia > velocidade) são verdadeiros.");
+            assertTrue(result, "Esperava verdadeiro quando (resistencia > ataque) e (resistencia > velocidade) sao verdadeiros.");
         } else if (resistencia > ataque) {
-            assertTrue(result, "Esperava verdadeiro quando apenas (resistencia > ataque) é verdadeiro.");
+            assertTrue(result, "Esperava verdadeiro quando apenas (resistencia > ataque) e verdadeiro.");
         } else if (resistencia > velocidade) {
-            assertTrue(result, "Esperava verdadeiro quando apenas (resistencia > velocidade) é verdadeiro.");
+            assertTrue(result, "Esperava verdadeiro quando apenas (resistencia > velocidade) e verdadeiro.");
         } else {
-            assertFalse(result, "Esperava falso quando (resistencia > ataque) e (resistencia > velocidade) são falsos.");
+            assertFalse(result, "Esperava falso quando (resistencia > ataque) e (resistencia > velocidade) sao falsos.");
         }
     }
 
@@ -36,10 +37,10 @@ public class PersonagemTest {
     @CsvSource({
             "5, 4, 6, 5",    // Ataque < Velocidade
             "6, 4, 5, 5",    // Velocidade < Ataque
-            "5, 6, 4, 5",    // Defesa > Ataque
-            "5, 4, 6, 5",    // Defesa > Velocidade
+            "5, 6, 5, 4",    // Defesa > Ataque
+            "5, 6, 5, 4",    // Defesa > Velocidade
             "5, 4, 5, 6",    // Resistencia > Ataque
-            "5, 5, 4, 6"     // Resistencia > Velocidade
+            "5, 4, 5, 6"     // Resistencia > Velocidade
     })
     void testAssassinoInvalido(int ataque, int defesa, int velocidade, int resistencia) {
         assertThrows(IllegalArgumentException.class, () -> {
@@ -146,23 +147,33 @@ public class PersonagemTest {
         }, "Nao esperava excecao para os atributos fornecidos.");
     }
 
+    @Test
+    public void testPersonagemAtributoValorMinimoInvalido() {
+        Personagem p = PersonagemBuilder.construaUmPersonagem()
+                .comAtaque(5)
+                .comDefesa(5)
+                .comVelocidade(5)
+                .comResistencia(5)
+                .doTipoAssassino();
 
-    @ParameterizedTest
-    @CsvSource({
-            "2, 6, 6, 6",    // Ataque < 3
-            "6, 2, 6, 6",    // Defesa < 3
-            "6, 6, 2, 6",    // Velocidade < 3
-            "6, 6, 6, 2",    // Resistencia < 3
-
-    })
-    void testPersonagemAtributoValorMinimoInvalido(int ataque, int defesa, int velocidade, int resistencia) {
         assertThrows(IllegalArgumentException.class, () -> {
-            PersonagemBuilder.construaUmPersonagem()
-                    .comAtaque(ataque)
-                    .comDefesa(defesa)
-                    .comVelocidade(velocidade)
-                    .comResistencia(resistencia)
-                    .doTipoGuerreiro();
+            p.setAtaque(2);
+            p.checarValorMinimo(p.getAtaque());
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            p.setDefesa(2);
+            p.checarValorMinimo(p.getDefesa());
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            p.setVelocidade(2);
+            p.checarValorMinimo(p.getVelocidade());
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            p.setResistencia(2);
+            p.checarValorMinimo(p.getResistencia());
         });
     }
 

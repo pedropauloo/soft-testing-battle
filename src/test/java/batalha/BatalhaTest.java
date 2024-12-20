@@ -35,7 +35,7 @@ public class BatalhaTest {
 
         Batalha batalha = new Batalha(p1, p2, 1);
 
-        assertEquals(batalha.getPrimeiroAtacante(), p2);
+        assertEquals(batalha.getSegundoAtacante(), p1);
     }
 
     @Test
@@ -187,10 +187,12 @@ public class BatalhaTest {
 
     @Test
     public void testPersonagem2Vencedor() {
-        Personagem p1 = PersonagemBuilder.construaUmPersonagem().comAtaque(5).comDefesa(5).comVelocidade(5).comResistencia(5).doTipoAssassino();
-        Personagem p2 = PersonagemBuilder.construaUmPersonagem().comAtaque(6).comDefesa(4).comVelocidade(6).comResistencia(4).doTipoAssassino();
+        Personagem p1 = PersonagemBuilder.construaUmPersonagem().comAtaque(6).comDefesa(4).comVelocidade(6).comResistencia(4).doTipoAssassino();
+        Personagem p2 = PersonagemBuilder.construaUmPersonagem().comAtaque(5).comDefesa(5).comVelocidade(5).comResistencia(5).doTipoAssassino();
 
         Batalha batalha = new Batalha(p1, p2);
+
+        batalha.realizarPrimeiroAtaque();
 
         p1.setVida(0);
 
@@ -200,4 +202,25 @@ public class BatalhaTest {
         assertEquals(batalha.getVencedor(), p2);
     }
 
+    @Test
+    public void testNaoTemVencedor() {
+        Personagem p1 = PersonagemBuilder.construaUmPersonagem()
+                .comAtaque(6)
+                .comDefesa(4)
+                .comVelocidade(6)
+                .comResistencia(4)
+                .comJogador("Jogador 1")
+                .doTipoAssassino();
+        Personagem p2 = PersonagemBuilder.construaUmPersonagem()
+                .comAtaque(5)
+                .comDefesa(5)
+                .comVelocidade(5)
+                .comResistencia(5)
+                .comJogador("Jogador 2")
+                .doTipoGuerreiro();
+
+        Batalha batalha = new Batalha(p1, p2);
+
+        assertFalse(batalha.temVencedor());
+    }
 }

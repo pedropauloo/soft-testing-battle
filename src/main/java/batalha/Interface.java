@@ -41,4 +41,16 @@ public class Interface {
         } catch (InterruptedException ignored) {
         }
     }
+
+    static void exibirAtributosPersonagem(Personagem personagem) {
+        System.out.println();
+        System.out.println("Jogador: " + personagem.getJogador() + " (" + personagem.getClass().getSimpleName() + ")");
+        System.out.println("Ataque: " + personagem.getAtaque());
+        System.out.println("Defesa: " + personagem.getDefesa());
+        System.out.println("Velocidade: " + personagem.getVelocidade());
+        System.out.println("Resistência: " + personagem.getResistencia());
+        System.out.println("Vida: " + personagem.getVida());
+        System.out.println();
+    }
+
 }

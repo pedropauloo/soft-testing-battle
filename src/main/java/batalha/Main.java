@@ -76,9 +76,11 @@ public class Main {
         System.out.println("Jogo de Batalha");
         System.out.println("Escolha o personagem 1:");
         Personagem p1 = escolherPersonagem("Jogador 1");
+        Interface.exibirAtributosPersonagem(p1);
 
         System.out.println("Escolha o personagem 2:");
         Personagem p2 = escolherPersonagem("Jogador 2");
+        Interface.exibirAtributosPersonagem(p2);
 
         batalhar(p1, p2);
 

@@ -52,6 +52,10 @@ public abstract class Personagem {
     }
 
     public int atacar(Personagem defensor, double modificadorAtaque, boolean eGolpeCritico) {
+        if (modificadorAtaque < 0.8 || modificadorAtaque >= 1.2) {
+            throw new IllegalArgumentException("Modificador inválido");
+        }
+        
         int danoBase = this.calcularDanoBase(modificadorAtaque);
         int dano = this.calcularDanoInfringindo(danoBase, defensor.getDefesa(), eGolpeCritico);
 

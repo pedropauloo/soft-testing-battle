@@ -56,24 +56,29 @@ public class Batalha {
         realizarAtaque(segundoAtacante, primeiroAtacante);
     }
 
-    private boolean realizarAtaque(Personagem atacante, Personagem defensor) {
+    public int realizarAtaque(Personagem atacante, Personagem defensor, double randomicoModificadorAtaque, int randomicoCritico) {
         int chanceEvasao = calcularChanceEvasao(atacante, defensor);
         int randomicoEvasao = geradorRandomico.nextInt(100);
 
         if (evadiu(chanceEvasao, randomicoEvasao)) {
             Interface.exibirEvasao(atacante, defensor);
-            return false;
+
+            return -1;
         } else {
-            double modificadorAtaque = 0.8 + (geradorRandomico.nextDouble() * (0.4));
-            boolean eGolpeCritico = geradorRandomico.nextInt(1, 101) <= 10;
+            double modificadorAtaque = 0.8 + (randomicoModificadorAtaque * (0.4));
+            boolean eGolpeCritico = randomicoCritico <= 10;
 
             int dano = atacante.atacar(defensor, modificadorAtaque, eGolpeCritico);
 
             Interface.exibirAtaque(atacante, defensor, dano, eGolpeCritico);
 
             // Informar que atacante atacou defensor
-            return true;
+            return dano;
         }
+    }
+
+    private int realizarAtaque(Personagem atacante, Personagem defensor) {
+        return realizarAtaque(atacante, defensor, geradorRandomico.nextDouble(), geradorRandomico.nextInt(1, 101));
     }
 
     int calcularChanceEvasao(Personagem atacante, Personagem defensor) {

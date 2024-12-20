@@ -3,7 +3,8 @@ package batalha;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PersonagemTest {
 
@@ -13,8 +14,6 @@ class PersonagemTest {
             "5, 2, 5, 5",    // Defesa < 3
             "5, 5, 2, 5",    // Velocidade < 3
             "5, 5, 5, 2",    // Resistencia < 3
-            "5, 5, 5, 4",    // Soma < 20
-            "8, 6, 6, 5",    // Soma > 20
             "5, 3, 6, 5",    // Ataque < Velocidade
             "6, 3, 5, 5",    // Velocidade < Ataque
             "5, 6, 5, 5",    // Defesa > Ataque
@@ -23,7 +22,7 @@ class PersonagemTest {
             "5, 5, 5, 6"     // Resistencia > Velocidade
     })
     void testAssassinoInvalido(int ataque, int defesa, int velocidade, int resistencia) {
-        Throwable exception = assertThrows(Throwable.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             PersonagemBuilder.construaUmPersonagem()
                     .comAtaque(ataque)
                     .comDefesa(defesa)
@@ -31,11 +30,6 @@ class PersonagemTest {
                     .comResistencia(resistencia)
                     .doTipoAssassino();
         });
-
-        assertTrue(
-                exception instanceof IllegalArgumentException || exception instanceof IllegalStateException,
-                "Esperava IllegalArgumentException ou IllegalStateException, mas foi lancado: " + exception.getClass().getName()
-        );
     }
 
     @ParameterizedTest
@@ -54,14 +48,12 @@ class PersonagemTest {
                     .comVelocidade(velocidade)
                     .comResistencia(resistencia)
                     .doTipoAssassino();
-        }, "Noa esperava excecao para os atributos fornecidos.");
+        }, "Nao esperava excecao para os atributos fornecidos.");
     }
 
 
     @ParameterizedTest
     @CsvSource({
-            "7, 7, 7, 7",    // Soma > 20
-            "4, 4, 4, 4",    // Soma < 20
             "2, 5, 5, 5",    // Ataque < 3
             "5, 2, 5, 5",    // Defesa < 3
             "5, 5, 2, 5",    // Velocidade < 3
@@ -75,7 +67,7 @@ class PersonagemTest {
 
     })
     void testGuerreiroInvalido(int ataque, int defesa, int velocidade, int resistencia) {
-        Throwable exception = assertThrows(Throwable.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             PersonagemBuilder.construaUmPersonagem()
                     .comAtaque(ataque)
                     .comDefesa(defesa)
@@ -83,11 +75,6 @@ class PersonagemTest {
                     .comResistencia(resistencia)
                     .doTipoGuerreiro();
         });
-
-        assertTrue(
-                exception instanceof IllegalArgumentException || exception instanceof IllegalStateException,
-                "Esperava IllegalArgumentException ou IllegalStateException, mas foi lançado: " + exception.getClass().getName()
-        );
     }
 
     @ParameterizedTest
@@ -106,6 +93,22 @@ class PersonagemTest {
                     .comVelocidade(velocidade)
                     .comResistencia(resistencia)
                     .doTipoGuerreiro();
-        }, "Noa esperava excecao para os atributos fornecidos.");
+        }, "Nao esperava excecao para os atributos fornecidos.");
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            "5, 5, 5, 4",    // Soma < 20
+            "8, 6, 6, 5",    // Soma > 20
+    })
+    void testSomaAtributosPersonagemInvalidas(int ataque, int defesa, int velocidade, int resistencia) {
+        assertThrows(IllegalStateException.class, () -> {
+            PersonagemBuilder.construaUmPersonagem()
+                    .comAtaque(ataque)
+                    .comDefesa(defesa)
+                    .comVelocidade(velocidade)
+                    .comResistencia(resistencia);
+        });
     }
 }

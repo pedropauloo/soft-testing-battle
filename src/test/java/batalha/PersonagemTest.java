@@ -3,10 +3,34 @@ package batalha;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PersonagemTest {
+
+    private boolean verificarAtributosAssassino(int resistencia, int ataque, int velocidade) {
+        return resistencia > ataque || resistencia > velocidade;
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "10, 5, 8",    // (resistencia > ataque) = true, (resistencia > velocidade) = true
+            "10, 5, 15",   // (resistencia > ataque) = true, (resistencia > velocidade) = false
+            "10, 15, 8",   // (resistencia > ataque) = false, (resistencia > velocidade) = true
+            "5, 10, 15"    // (resistencia > ataque) = false, (resistencia > velocidade) = false
+    })
+    void testMC_DCAtributosAssassino(int resistencia, int ataque, int velocidade) {
+        boolean result = verificarAtributosAssassino(resistencia, ataque, velocidade);
+
+        if (resistencia > ataque && resistencia > velocidade) {
+            assertTrue(result, "Esperava verdadeiro quando (resistencia > ataque) e (resistencia > velocidade) são verdadeiros.");
+        } else if (resistencia > ataque) {
+            assertTrue(result, "Esperava verdadeiro quando apenas (resistencia > ataque) é verdadeiro.");
+        } else if (resistencia > velocidade) {
+            assertTrue(result, "Esperava verdadeiro quando apenas (resistencia > velocidade) é verdadeiro.");
+        } else {
+            assertFalse(result, "Esperava falso quando (resistencia > ataque) e (resistencia > velocidade) são falsos.");
+        }
+    }
 
     @ParameterizedTest
     @CsvSource({

@@ -1,6 +1,7 @@
 package batalha;
 
 public abstract class Personagem {
+    String jogador;
     private Integer ataque;
 
     private Integer defesa;
@@ -10,9 +11,6 @@ public abstract class Personagem {
     private Integer resistencia;
 
     private Integer vida;
-
-    Personagem() {
-    }
 
     public Personagem(Integer ataque, Integer defesa, Integer velocidade, Integer resistencia) {
         this.ataque = ataque;
@@ -25,6 +23,11 @@ public abstract class Personagem {
         checarValorMinimo();
 
         this.vida = 5 * this.resistencia;
+    }
+
+    public Personagem(Integer ataque, Integer defesa, Integer velocidade, Integer resistencia, String jogador) {
+        this(ataque, defesa, velocidade, resistencia);
+        this.jogador = jogador;
     }
 
     abstract void checarRegraDeClasse() throws IllegalArgumentException;
@@ -48,11 +51,13 @@ public abstract class Personagem {
         }
     }
 
-    public void atacar(Personagem defensor, double modificadorAtaque, boolean eGolpeCritico) {
+    public int atacar(Personagem defensor, double modificadorAtaque, boolean eGolpeCritico) {
         int danoBase = this.calcularDanoBase(modificadorAtaque);
         int dano = this.calcularDanoInfringindo(danoBase, defensor.getDefesa(), eGolpeCritico);
 
         defensor.receberDano(dano);
+
+        return dano;
     }
 
     int calcularDanoInfringindo(int danoBase, int defesa, boolean eGolpeCritico) {
@@ -113,5 +118,9 @@ public abstract class Personagem {
 
     public void setVida(Integer vida) {
         this.vida = vida;
+    }
+
+    public String getJogador() {
+        return jogador;
     }
 }

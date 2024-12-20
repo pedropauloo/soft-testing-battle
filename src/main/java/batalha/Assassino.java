@@ -6,6 +6,10 @@ public class Assassino extends Personagem {
         super(ataque, defesa, velocidade, resistencia);
     }
 
+    public Assassino(Integer ataque, Integer defesa, Integer velocidade, Integer resistencia, String jogador) {
+        super(ataque, defesa, velocidade, resistencia, jogador);
+    }
+
     @Override
     final void checarRegraDeClasse() throws IllegalArgumentException {
         if (getAtaque() < getVelocidade()) {

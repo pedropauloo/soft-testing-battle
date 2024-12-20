@@ -1,7 +1,7 @@
 package batalha;
 
 public class PersonagemBuilder {
-
+    private String jogador;
     private Integer ataque;
 
     private Integer defesa;
@@ -34,17 +34,18 @@ public class PersonagemBuilder {
         return this;
     }
 
+    public PersonagemBuilder comJogador(String jogador) {
+        this.jogador = jogador;
+        return this;
+    }
+
     public Assassino doTipoAssassino() throws IllegalArgumentException {
-        return new Assassino(ataque, defesa, velocidade, resistencia);
+        return new Assassino(ataque, defesa, velocidade, resistencia, jogador);
     }
 
-    // add throws IllegalArgumentException
     public Guerreiro doTipoGuerreiro() throws IllegalArgumentException {
-        return new Guerreiro(ataque, defesa, velocidade, resistencia);
+        return new Guerreiro(ataque, defesa, velocidade, resistencia, jogador);
     }
 
-    public Assassino umAssassinoValido() {
-        return new Assassino(7, 3, 7, 3);
-    }
 
 }

@@ -40,7 +40,8 @@ public class Batalha {
 
     static int calcularChanceEvasao(int velocidadeAtacante, int velocidadeDefensor) {
         int chanceEvasao = min(50, (velocidadeDefensor - velocidadeAtacante) * 2);
-        return chanceEvasao < 0 ? 0 : chanceEvasao;
+
+        return Math.max(chanceEvasao, 0);
     }
 
     public void realizarPrimeiroAtaque() {
@@ -63,10 +64,25 @@ public class Batalha {
             double modificadorAtaque = 0.8 + (geradorRandomico.nextDouble() * (0.4));
             boolean eGolpeCritico = geradorRandomico.nextInt(1, 101) <= 10;
 
-            atacante.atacar(defensor, modificadorAtaque, eGolpeCritico);
+            int dano = atacante.atacar(defensor, modificadorAtaque, eGolpeCritico);
+
+            exibirAtaque(atacante, defensor, dano, eGolpeCritico);
 
             // Informar que atacante atacou defensor
             return true;
+        }
+    }
+
+    private void exibirAtaque(Personagem atacante, Personagem defensor, int dano, boolean eGolpeCritico) {
+        try {
+            String golpeCritico = eGolpeCritico ? " com golpe crítico" : "";
+            String jogadorAtacante = atacante.getJogador() + " (" + atacante.getClass().getSimpleName() + ")";
+            String jogadorDefensor = defensor.getJogador() + " (" + defensor.getClass().getSimpleName() + ")";
+
+            System.out.println(jogadorAtacante + " atacou " + jogadorDefensor + " com dano " + dano + golpeCritico);
+
+            Thread.sleep(300);
+        } catch (InterruptedException ignored) {
         }
     }
 

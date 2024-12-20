@@ -8,28 +8,25 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PersonagemTest {
 
-    private boolean verificarAtributosAssassino(int resistencia, int ataque, int velocidade) {
-        return resistencia > ataque || resistencia > velocidade;
+    private boolean verificarAtributosMinimosPersonagem(int ataque, int defesa, int velocidade, int resistencia) {
+        return ataque < 3 || defesa < 3 || velocidade < 3 || resistencia < 3;
     }
 
     @ParameterizedTest
     @CsvSource({
-            "10, 5, 8",    // (resistencia > ataque) = true, (resistencia > velocidade) = true
-            "10, 5, 15",   // (resistencia > ataque) = true, (resistencia > velocidade) = false
-            "10, 15, 8",   // (resistencia > ataque) = false, (resistencia > velocidade) = true
-            "5, 10, 15"    // (resistencia > ataque) = false, (resistencia > velocidade) = false
+            "2, 5, 5, 5",    // ataque < 3 = true, defesa < 3 = false, velocidade < 3 = false, resistencia < 3 = false
+            "5, 2, 5, 5",    // ataque < 3 = false, defesa < 3 = true, velocidade < 3 = false, resistencia < 3 = false
+            "5, 5, 2, 5",    // ataque < 3 = false, defesa < 3 = false, velocidade < 3 = true, resistencia < 3 = false
+            "5, 5, 5, 2",    // ataque < 3 = false, defesa < 3 = false, velocidade < 3 = false, resistencia < 3 = true
+            "5, 5, 5, 5"     // ataque < 3 = false, defesa < 3 = false, velocidade < 3 = false, resistencia < 3 = false
     })
-    void testMC_DCAtributosAssassino(int resistencia, int ataque, int velocidade) {
-        boolean result = verificarAtributosAssassino(resistencia, ataque, velocidade);
+    void testMC_DCAtributosMinimosPersonagem(int ataque, int defesa, int velocidade, int resistencia) {
+        boolean result = verificarAtributosMinimosPersonagem(ataque, defesa, velocidade, resistencia);
 
-        if (resistencia > ataque && resistencia > velocidade) {
-            assertTrue(result, "Esperava verdadeiro quando (resistencia > ataque) e (resistencia > velocidade) sao verdadeiros.");
-        } else if (resistencia > ataque) {
-            assertTrue(result, "Esperava verdadeiro quando apenas (resistencia > ataque) e verdadeiro.");
-        } else if (resistencia > velocidade) {
-            assertTrue(result, "Esperava verdadeiro quando apenas (resistencia > velocidade) e verdadeiro.");
+        if (ataque < 3 || defesa < 3 || velocidade < 3 || resistencia < 3) {
+            assertTrue(result, "Esperava verdadeiro quando pelo menos uma condicão e verdadeira.");
         } else {
-            assertFalse(result, "Esperava falso quando (resistencia > ataque) e (resistencia > velocidade) sao falsos.");
+            assertFalse(result, "Esperava falso quando todas as condições sao falsas.");
         }
     }
 

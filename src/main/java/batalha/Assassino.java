@@ -18,10 +18,10 @@ public class Assassino extends Personagem {
         if (getVelocidade() < getAtaque()) {
             throw new IllegalArgumentException("Velocidade deve ser maior ou igual ao Ataque.");
         }
-        if (getResistencia() > getAtaque() || getResistencia() > getVelocidade()) {
+        if (getResistencia() > getAtaque()) {
             throw new IllegalArgumentException("Resistência deve ser menor ou igual a Ataque e Velocidade.");
         }
-        if (getDefesa() > getAtaque() || getDefesa() > getVelocidade()) {
+        if (getDefesa() > getAtaque()) {
             throw new IllegalArgumentException("Defesa deve ser menor ou igual a Ataque e Velocidade.");
         }
     }

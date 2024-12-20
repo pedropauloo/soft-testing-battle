@@ -2,9 +2,9 @@
 
 ## Autores
 
-- **Samuel de Araujo Costa**  
-- **Pedro Paulo Lucas de Lira**  
-- **José Ben Hur Nascimento**  
+- **Samuel de Araujo Costa**
+- **Pedro Paulo Lucas de Lira**
+- **José Ben Hur Nascimento**
 
 ---
 
@@ -24,32 +24,41 @@ Os principais objetivos do projeto incluem:
 
 ## Instruções de Compilação e Execução
 
-*(Espaço reservado para implementação futura.)*
+1. Clone o repositório
+2. Abra o terminal e execute o comando `mvn clean install`
+3. Em seguida, execute o comando `mvn exec:java -Dexec.mainClass="batalha.Main"` para rodar a demonstração
 
 ---
 
 ## Como Executar os Testes
 
-*(Espaço reservado para implementação futura.)*
+Após o programa compilado:
+
+1. Abra o terminal e execute o comando `mvn clean test` para rodar os testes
 
 ---
 
 ## Como Gerar o Relatório de Cobertura
 
-*(Espaço reservado para implementação futura.)*
+Após executar os testes, para visualizar a cobertura de código, acesse o seguinte diretorio `target/site/jacoco/index.html` e abra o
+arquivo `index.html` no navegador para visualizar o relatório de cobertura de código
 
 ---
 
 ## Dependências
 
-*(Espaço reservado para implementação futura.)*
+O projeto utiliza as seguintes dependências para testes e cobertura de código:
+
+- **JUnit Platform Suite** (`org.junit.platform:junit-platform-suite:1.11.0-M2`): Plataforma de execução de testes.
+- **JUnit Jupiter Migration Support** (`org.junit.jupiter:junit-jupiter-migrationsupport:5.11.0-M2`): Suporte para migração de testes do JUnit 4 para o JUnit 5.
+- **JUnit Jupiter Params** (`org.junit.jupiter:junit-jupiter-params:5.11.0-M2`): Suporte a testes parametrizados no JUnit 5.
+
+### Plugin de Build
+
+- **JaCoCo Maven Plugin** (`org.jacoco:jacoco-maven-plugin:0.8.10`):
+  - Gera relatórios de cobertura de código.
 
 ---
-
-## Uso do Programa
-
-*(Espaço reservado para implementação futura.)*
-
 
 # Documentação das Regras de Negócio
 
@@ -59,8 +68,8 @@ Os principais objetivos do projeto incluem:
 
 - **Partição Válida**: A soma de ataque, defesa, velocidade e resistência é exatamente 20.
 - **Partição Inválida**: A soma dos atributos é diferente de 20:
-    - Menor que 20.
-    - Maior que 20.
+  - Menor que 20.
+  - Maior que 20.
 
 ### 1.2. Análise dos Valores Limites Identificados
 
@@ -70,11 +79,11 @@ Os principais objetivos do projeto incluem:
 
 ### 1.3. Tabela de Decisão
 
-| **Condição**                      | **Ação**                            |
-|-----------------------------------|-------------------------------------|
-| Soma dos atributos = 20           | Atributos válidos                   |
-| Soma dos atributos < 20           | Lançar exceção: "Somatório menor que 20" |
-| Soma dos atributos > 20           | Lançar exceção: "Somatório maior que 20" |
+| **Condição**            | **Ação**                                 |
+| ----------------------- | ---------------------------------------- |
+| Soma dos atributos = 20 | Atributos válidos                        |
+| Soma dos atributos < 20 | Lançar exceção: "Somatório menor que 20" |
+| Soma dos atributos > 20 | Lançar exceção: "Somatório maior que 20" |
 
 ---
 
@@ -93,10 +102,10 @@ Os principais objetivos do projeto incluem:
 
 ### 2.3. Tabela de Decisão
 
-| **Condição**                     | **Ação**                                     |
-|----------------------------------|----------------------------------------------|
-| Todos os atributos ≥ 3           | Atributos válidos                            |
-| Algum atributo < 3               | Lançar exceção: "Atributo abaixo do limite permitido" |
+| **Condição**           | **Ação**                                              |
+| ---------------------- | ----------------------------------------------------- |
+| Todos os atributos ≥ 3 | Atributos válidos                                     |
+| Algum atributo < 3     | Lançar exceção: "Atributo abaixo do limite permitido" |
 
 ---
 
@@ -116,11 +125,11 @@ Os principais objetivos do projeto incluem:
 
 ### 3.3. Tabela de Decisão
 
-| **Condição**                    | **Ação**                           |
-|---------------------------------|------------------------------------|
-| Velocidade P1 > Velocidade P2   | P1 ataca primeiro                  |
-| Velocidade P1 < Velocidade P2   | P2 ataca primeiro                  |
-| Velocidade P1 == Velocidade P2  | Escolha aleatória do atacante      |
+| **Condição**                   | **Ação**                      |
+| ------------------------------ | ----------------------------- |
+| Velocidade P1 > Velocidade P2  | P1 ataca primeiro             |
+| Velocidade P1 < Velocidade P2  | P2 ataca primeiro             |
+| Velocidade P1 == Velocidade P2 | Escolha aleatória do atacante |
 
 ---
 
@@ -138,10 +147,10 @@ Os principais objetivos do projeto incluem:
 
 ### 4.3. Tabela de Decisão
 
-| **Condição**                                      | **Ação**                                 |
-|--------------------------------------------------|------------------------------------------|
-| Velocidade do defensor > Velocidade do atacante | Evasão calculada entre 0% e 50%          |
-| Velocidade do defensor <= Velocidade do atacante| Chance de evasão = 0%                    |
+| **Condição**                                     | **Ação**                        |
+| ------------------------------------------------ | ------------------------------- |
+| Velocidade do defensor > Velocidade do atacante  | Evasão calculada entre 0% e 50% |
+| Velocidade do defensor <= Velocidade do atacante | Chance de evasão = 0%           |
 
 ---
 
@@ -152,47 +161,51 @@ Os principais objetivos do projeto incluem:
 #### **Classe Assassino**
 
 - **Partição Válida**:
-    - Ataque igual à Velocidade.
-    - Resistência e Defesa menores ou iguais a Ataque e Velocidade.
+
+  - Ataque igual à Velocidade.
+  - Resistência e Defesa menores ou iguais a Ataque e Velocidade.
 
 - **Partição Inválida**:
-    - Ataque maior que Velocidade.
-    - Velocidade maior que Ataque.
-    - Resistência ou Defesa maiores que Ataque ou Velocidade.
+  - Ataque maior que Velocidade.
+  - Velocidade maior que Ataque.
+  - Resistência ou Defesa maiores que Ataque ou Velocidade.
 
 #### **Classe Guerreiro**
 
 - **Partição Válida**:
-    - Ataque igual à Resistência.
-    - Velocidade e Defesa menores ou iguais a Ataque e Resistência.
+
+  - Ataque igual à Resistência.
+  - Velocidade e Defesa menores ou iguais a Ataque e Resistência.
 
 - **Partição Inválida**:
-    - Ataque maior que Resistência.
-    - Resistência maior que Ataque.
-    - Velocidade ou Defesa maiores que Ataque ou Resistência.
+  - Ataque maior que Resistência.
+  - Resistência maior que Ataque.
+  - Velocidade ou Defesa maiores que Ataque ou Resistência.
 
 ### 5.2. Análise dos Valores Limites Identificados
 
 **Para o Assassino**:
+
 - **Limite Inferior**: Ataque ≠ Velocidade (inválido).
 - **Valor Válido**: Ataque = Velocidade e restrições atendidas.
 - **Valor Superior**: Defesa ou Resistência > Ataque ou Velocidade (inválido).
 
 **Para o Guerreiro**:
+
 - **Limite Inferior**: Ataque ≠ Resistência (inválido).
 - **Valor Válido**: Ataque = Resistência e restrições atendidas.
 - **Valor Superior**: Velocidade ou Defesa > Ataque ou Resistência (inválido).
 
 ### 5.3. Tabela de Decisão
 
-| **Classe**   | **Condição**                                      | **Ação**                                     |
-|--------------|---------------------------------------------------|----------------------------------------------|
-| Assassino    | Ataque == Velocidade                             | Válido                                       |
-| Assassino    | Resistência ou Defesa ≤ Ataque e Velocidade      | Válido                                       |
-| Assassino    | Caso contrário                                    | Lançar exceção: "Regras de classe violadas"  |
-| Guerreiro    | Ataque == Resistência                            | Válido                                       |
-| Guerreiro    | Velocidade ou Defesa ≤ Ataque e Resistência      | Válido                                       |
-| Guerreiro    | Caso contrário                                    | Lançar exceção: "Regras de classe violadas"  |
+| **Classe** | **Condição**                                | **Ação**                                    |
+| ---------- | ------------------------------------------- | ------------------------------------------- |
+| Assassino  | Ataque == Velocidade                        | Válido                                      |
+| Assassino  | Resistência ou Defesa ≤ Ataque e Velocidade | Válido                                      |
+| Assassino  | Caso contrário                              | Lançar exceção: "Regras de classe violadas" |
+| Guerreiro  | Ataque == Resistência                       | Válido                                      |
+| Guerreiro  | Velocidade ou Defesa ≤ Ataque e Resistência | Válido                                      |
+| Guerreiro  | Caso contrário                              | Lançar exceção: "Regras de classe violadas" |
 
 ---
 
@@ -201,14 +214,15 @@ Os principais objetivos do projeto incluem:
 ### 6.1. Descrição das Partições Identificadas
 
 - **Partição Válida**:
-    - Modificador de ataque no intervalo de [0.8, 1.2[.
-    - Presença ou ausência de golpe crítico.
 
-    - Golpe crítico aumenta o dano base em 50%.
+  - Modificador de ataque no intervalo de [0.8, 1.2[.
+  - Presença ou ausência de golpe crítico.
+
+  - Golpe crítico aumenta o dano base em 50%.
 
 - **Partição Inválida**:
-    - Modificador fora do intervalo [0.8, 1.2[.
-    - Cálculo incorreto do golpe crítico.
+  - Modificador fora do intervalo [0.8, 1.2[.
+  - Cálculo incorreto do golpe crítico.
 
 ### 6.2. Análise dos Valores Limites Identificados
 
@@ -219,12 +233,12 @@ Os principais objetivos do projeto incluem:
 
 ### 6.3. Tabela de Decisão
 
-| **Condição**                     | **Ação**                             |
-|----------------------------------|--------------------------------------|
-| Modificador dentro de [0.8, 1.2[| Cálculo normal                       |
-| Modificador fora do intervalo    | Erro: "Modificador inválido"         |
-| Golpe crítico                    | Multiplicar dano por 1.5             |
-| Sem golpe crítico                | Não alterar dano base                |
+| **Condição**                     | **Ação**                     |
+| -------------------------------- | ---------------------------- |
+| Modificador dentro de [0.8, 1.2[ | Cálculo normal               |
+| Modificador fora do intervalo    | Erro: "Modificador inválido" |
+| Golpe crítico                    | Multiplicar dano por 1.5     |
+| Sem golpe crítico                | Não alterar dano base        |
 
 ---
 
@@ -243,16 +257,18 @@ Os principais objetivos do projeto incluem:
 
 ### 7.3. Tabela de Decisão
 
-| **Condição**               | **Ação**                               |
-|-----------------------------|----------------------------------------|
-| HP de P1 ou P2 = 0         | Declarar vencedor                      |
-| Ambos os HP > 0            | Batalha continua                       |
-| HP de P1 ou P2 < 0         | Erro: “HP não pode ser negativo”       |
+| **Condição**       | **Ação**                         |
+| ------------------ | -------------------------------- |
+| HP de P1 ou P2 = 0 | Declarar vencedor                |
+| Ambos os HP > 0    | Batalha continua                 |
+| HP de P1 ou P2 < 0 | Erro: “HP não pode ser negativo” |
 
 ## Casos de Teste - Personagem
 
 ### 8.1. Identificação e Descrição
+
 #### Exemplo: Caso de Teste CT01
+
 - **Regra**: Ataque >= Velocidade (Assassino).
 - **Descrição**: Verifica se o sistema aceita personagens Assassinos onde o Ataque é maior ou igual à Velocidade.
 - **Entradas**: Ataque = 6, Velocidade = 6, Defesa = 4, Resistência = 4.
@@ -261,16 +277,20 @@ Os principais objetivos do projeto incluem:
 - **Pós-condição**: Objeto válido da classe Assassino.
 
 ### 8.2. Implementação
+
 - Testes foram implementados em `PersonagemTest.java`.
 - Testes parametrizados cobrem cenários de partições válidas e inválidas.
 
 ## 9. Cobertura de Testes
 
 ### 9.1. Relatório de Cobertura
+
 - Ferramenta utilizada: JaCoCo.
 - **Cobertura alcançada**:
-  - Cobertura de arestas: 100%.
-  - Cobertura de instruções: 98%.
+  - Cobertura de arestas: 79%.
+  - Cobertura de instruções: 73%.
+
+_OBS: a porcentagem de cobertura acima não atingiu a máxima devido a conflitos nas regras de negócios para as classes de Assassino e Guerreiro, as quais requeriam que Ataque e velocidade fossem iguais e Ataque e resistencia_
 
 ## 10. Critério MC/DC
 

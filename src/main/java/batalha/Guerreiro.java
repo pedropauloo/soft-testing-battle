@@ -18,10 +18,10 @@ public class Guerreiro extends Personagem {
         if (getResistencia() < getAtaque()) {
             throw new IllegalArgumentException("Resistencia deve ser maior ou igual ao Ataque.");
         }
-        if (getVelocidade() > getAtaque() || getVelocidade() > getResistencia()) {
+        if (getVelocidade() > getAtaque()) {
             throw new IllegalArgumentException("Velocidade deve ser menor ou igual a Ataque e Resistencia.");
         }
-        if (getDefesa() > getAtaque() || getDefesa() > getResistencia()) {
+        if (getDefesa() > getAtaque()) {
             throw new IllegalArgumentException("Defesa deve ser menor ou igual a Ataque e Resistencia.");
         }
     }

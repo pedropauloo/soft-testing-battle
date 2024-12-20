@@ -3,6 +3,29 @@ package batalha;
 public class Main {
 
 
+    private static void batalhar(Personagem p1, Personagem p2) {
+        Batalha batalha = new Batalha(p1, p2);
+
+        System.out.println("O primeiro atacante é " + batalha.getPrimeiroAtacante().getJogador());
+        System.out.println("O segundo atacante é " + batalha.getSegundoAtacante().getJogador());
+
+        while (true) {
+            batalha.realizarPrimeiroAtaque();
+
+            if (batalha.temVencedor()) {
+                System.out.println("O vencedor é " + batalha.getVencedor().getJogador());
+                break;
+            }
+
+            batalha.realizarSegundoAtaque();
+
+            if (batalha.temVencedor()) {
+                System.out.println("O vencedor é " + batalha.getVencedor().getJogador());
+                break;
+            }
+        }
+    }
+
     private static Personagem escolherPersonagem(int opcao, String jogador) {
         try {
             switch (opcao) {
@@ -57,29 +80,23 @@ public class Main {
         System.out.println("Escolha o personagem 2:");
         Personagem p2 = escolherPersonagem("Jogador 2");
 
-        Batalha batalha = new Batalha(p1, p2);
-
-        System.out.println("O primeiro atacante é " + batalha.getPrimeiroAtacante().getJogador());
-        System.out.println("O segundo atacante é " + batalha.getSegundoAtacante().getJogador());
-
+        batalhar(p1, p2);
 
         while (true) {
-            batalha.realizarPrimeiroAtaque();
+            System.out.println("Fim de jogo");
+            System.out.println("Deseja tentar uma nova batalha?");
+            System.out.println("1 - Sim");
+            System.out.println("0 - Não");
 
-            if (batalha.temVencedor()) {
-                System.out.println("O vencedor é " + batalha.getVencedor().getJogador());
-                break;
+            switch (Integer.parseInt(System.console().readLine())) {
+                case 1:
+                    main(args);
+                    break;
+                case 0:
+                    System.exit(0);
+                default:
+                    Interface.exibirMensagemErro("Opção inválida");
             }
-
-            batalha.realizarSegundoAtaque();
-
-            if (batalha.temVencedor()) {
-                System.out.println("O vencedor é " + batalha.getVencedor().getJogador());
-                break;
-            }
-
         }
-
-
     }
 }

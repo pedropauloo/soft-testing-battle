@@ -58,7 +58,7 @@ public class Batalha {
 
 
         if (this.evadiu(chanceEvasao, randomicoEvasao)) {
-            // Informar que evadiu
+            Interface.exibirEvasao(atacante, defensor);
             return false;
         } else {
             double modificadorAtaque = 0.8 + (geradorRandomico.nextDouble() * (0.4));
@@ -66,25 +66,13 @@ public class Batalha {
 
             int dano = atacante.atacar(defensor, modificadorAtaque, eGolpeCritico);
 
-            exibirAtaque(atacante, defensor, dano, eGolpeCritico);
+            Interface.exibirAtaque(atacante, defensor, dano, eGolpeCritico);
 
             // Informar que atacante atacou defensor
             return true;
         }
     }
 
-    private void exibirAtaque(Personagem atacante, Personagem defensor, int dano, boolean eGolpeCritico) {
-        try {
-            String golpeCritico = eGolpeCritico ? " com golpe crítico" : "";
-            String jogadorAtacante = atacante.getJogador() + " (" + atacante.getClass().getSimpleName() + ")";
-            String jogadorDefensor = defensor.getJogador() + " (" + defensor.getClass().getSimpleName() + ")";
-
-            System.out.println(jogadorAtacante + " atacou " + jogadorDefensor + " com dano " + dano + golpeCritico);
-
-            Thread.sleep(300);
-        } catch (InterruptedException ignored) {
-        }
-    }
 
     boolean evadiu(int chanceEvasao, int randomico) {
         return randomico <= chanceEvasao;

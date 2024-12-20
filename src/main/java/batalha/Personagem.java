@@ -61,7 +61,7 @@ public abstract class Personagem {
     }
 
     int calcularDanoInfringindo(int danoBase, int defesa, boolean eGolpeCritico) {
-        int danoInfringido = Math.min(1, danoBase - defesa);
+        int danoInfringido = Math.max(1, danoBase - defesa);
 
         if (eGolpeCritico) {
             return (int) (danoInfringido * 1.5);

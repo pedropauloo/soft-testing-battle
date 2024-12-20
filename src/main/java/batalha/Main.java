@@ -1,13 +1,7 @@
 package batalha;
 
 public class Main {
-    private static void exibirMensagemErro(String message) {
-        try {
-            System.err.println(message);
-            Thread.sleep(100);
-        } catch (InterruptedException ignored) {
-        }
-    }
+
 
     private static Personagem escolherPersonagem(int opcao, String jogador) {
         try {
@@ -19,11 +13,11 @@ public class Main {
                 case 0:
                     System.exit(0);
                 default:
-                    exibirMensagemErro("Opção inválida");
+                    Interface.exibirMensagemErro("Opção inválida");
                     return escolherPersonagem(jogador);
             }
         } catch (IllegalArgumentException | IllegalStateException e) {
-            exibirMensagemErro(e.getMessage());
+            Interface.exibirMensagemErro(e.getMessage());
 
             return escolherPersonagem(opcao, jogador);
         }
@@ -66,6 +60,7 @@ public class Main {
         Batalha batalha = new Batalha(p1, p2);
 
         System.out.println("O primeiro atacante é " + batalha.getPrimeiroAtacante().getJogador());
+        System.out.println("O segundo atacante é " + batalha.getSegundoAtacante().getJogador());
 
 
         while (true) {

@@ -263,23 +263,154 @@ O projeto utiliza as seguintes dependências para testes e cobertura de código:
 | Ambos os HP > 0    | Batalha continua                 |
 | HP de P1 ou P2 < 0 | Erro: “HP não pode ser negativo” |
 
-## Casos de Teste - Personagem
+# 8 - Relatório de Testes
 
-### 8.1. Identificação e Descrição
+## 8.1. Introdução
+Este relatório documenta os testes realizados no projeto "Jogo de Batalha por Turnos". O objetivo é validar as regras de negócio, garantir a qualidade do código e assegurar que os critérios funcionais e de cobertura (incluindo MC/DC) foram atendidos. Os testes abrangem as funcionalidades de criação de personagens, validação de atributos, execução da batalha e cálculo de danos.
 
-#### Exemplo: Caso de Teste CT01
+---
 
-- **Regra**: Ataque >= Velocidade (Assassino).
-- **Descrição**: Verifica se o sistema aceita personagens Assassinos onde o Ataque é maior ou igual à Velocidade.
-- **Entradas**: Ataque = 6, Velocidade = 6, Defesa = 4, Resistência = 4.
-- **Saída Esperada**: Personagem criado com sucesso.
-- **Pré-condição**: Somatório de atributos = 20.
-- **Pós-condição**: Objeto válido da classe Assassino.
+## 8.2. Testes do Personagem (`PersonagemTest`)
 
-### 8.2. Implementação
+### 8.2.1. Objetivo
+Validar a criação e as regras de negócio associadas às classes derivadas de `Personagem` (como `Assassino` e `Guerreiro`), garantindo que os atributos respeitem as restrições impostas.
 
-- Testes foram implementados em `PersonagemTest.java`.
-- Testes parametrizados cobrem cenários de partições válidas e inválidas.
+---
+
+### 8.2.2. Casos de Teste
+
+#### **8.2.2.1. Validação de Soma dos Atributos**
+- **Descrição**: Verificar se a soma de ataque, defesa, velocidade e resistência é igual a 20.
+- **Casos Testados**:
+  - **Válido**: Combinações onde a soma é exatamente 20.
+  - **Inválido**: Soma menor ou maior que 20.
+- **Exemplo de Entrada**:
+  - Inválido: Ataque = 5, Defesa = 5, Velocidade = 4, Resistência = 5 (Soma = 19).
+  - Inválido: Ataque = 8, Defesa = 6, Velocidade = 6, Resistência = 8 (Soma = 28).
+  - Válido: Ataque = 5, Defesa = 5, Velocidade = 5, Resistência = 5 (Soma = 20).
+  - Válido: Ataque = 6, Defesa = 4, Velocidade = 6, Resistência = 4 (Soma = 20).
+  - Válido: Ataque = 6, Defesa = 5, Velocidade = 6, Resistência = 3 (Soma = 20).
+  - Válido: Ataque = 6, Defesa = 3, Velocidade = 6, Resistência = 5 (Soma = 20).
+
+- **Resultado Esperado**:
+  - Exceção lançada para valores inválidos: `Esperava excecao para os atributos fornecidos.`
+  - Sucesso para valores válidos: `Nao esperava excecao para os atributos fornecidos.`
+- **Métodos**: `testSomaAtributosPersonagemValidas`, `testSomaAtributosPersonagemInvalidas`.
+
+---
+
+#### **8.2.2.2. Validação de Atributos Mínimos**
+- **Descrição**: Garantir que todos os atributos são ≥ 3.
+- **Casos Testados**:
+  - **Válido**: Todos os atributos ≥ 3.
+  - **Inválido**: Pelo menos um atributo < 3.
+- **Exemplo de Entrada**:
+  - Inválido: Ataque = 2, Defesa = 5, Velocidade = 5, Resistência = 5.
+  - Válido: Ataque = 5, Defesa = 5, Velocidade = 5, Resistência = 5.
+- **Resultado Esperado**:
+  - Exceção lançada para valores inválidos.
+  - Sucesso para valores válidos.
+- **Métodos**: `testPersonagemAtributoValorMinimoValidos`, `testPersonagemAtributoValorMinimoInvalido`.
+
+---
+
+#### **8.2.2.3. Regras Específicas de Classes**
+
+ *Assassino:*
+- **Descrição**: Validação das restrições de Ataque, Velocidade, Resistência e Defesa.
+- **Casos Testados**:
+  - **Válido**: Respeita as condições de que Ataque ≥ Velocidade e outros atributos ≤ Ataque e Velocidade.
+  - **Inválido**: Viola qualquer uma dessas condições.
+- **Exemplo de Entrada**:
+  - Inválido: Ataque = 5, Defesa = 6, Velocidade = 4, Resistência = 6.
+  - Válido: Ataque = 6, Defesa = 5, Velocidade = 6, Resistência = 3.
+- **Métodos**: `testAssassinoValido`, `testAssassinoInvalido`.
+
+ *Guerreiro:*
+- **Descrição**: Validação das restrições específicas de Ataque, Resistência, Velocidade e Defesa.
+- **Casos Testados**:
+  - **Válido**: Respeita as condições de que Ataque ≥ Resistência e outros atributos ≤ Ataque e Resistência.
+  - **Inválido**: Viola qualquer uma dessas condições.
+- **Exemplo de Entrada**:
+  - Inválido: Ataque = 5, Defesa = 7, Velocidade = 6, Resistência = 4.
+  - Válido: Ataque = 6, Defesa = 4, Velocidade = 4, Resistência = 6.
+- **Métodos**: `testGuerreiroValido`, `testGuerreiroInvalido`.
+
+---
+
+#### **8.2.2.4. Cobertura MC/DC**
+- **Descrição**: Aplicação do critério MC/DC ao método `verificarAtributosAssassino`.
+- **Condições**:
+  - `resistencia > ataque`
+  - `resistencia > velocidade`
+- **Casos Testados**:
+  - Ambas as condições verdadeiras.
+  - Cada condição verdadeira isoladamente.
+  - Ambas as condições falsas.
+- **Método**: `testMC_DCAtributosAssassino`.
+
+---
+
+## 8.3. Testes da Batalha (`BatalhaTest`)
+
+### 8.3.1. Objetivo
+Garantir que as regras de batalha, cálculo de danos e seleção de turnos funcionam conforme o esperado.
+
+---
+
+### 8.3.2. Casos de Teste
+
+#### **8.3.2.1. Seleção do Primeiro Atacante**
+- **Descrição**: Determinar o personagem que inicia o ataque com base na Velocidade.
+- **Casos Testados**:
+  - P1 tem maior Velocidade.
+  - P2 tem maior Velocidade.
+  - Empate (escolha aleatória).
+- **Exemplo de Entrada**:
+    ***Caso 1***
+  - P1: Ataque = 6, Defesa = 4, Velocidade = 6, Resistência = 4.
+  - P2: Ataque = 5, Defesa = 5, Velocidade = 5, Resistência = 5.
+   ***Caso 2***
+  - P1: Ataque = 5, Defesa = 5, Velocidade = 5, Resistência = 5.
+  - P2: Ataque = 6, Defesa = 4, Velocidade = 6, Resistência = 4.
+- **Métodos**: `testPersonagem1MaiorVelocidadeAtacaPrimeiro`, `testPersonagem2MaiorVelocidadeAtacaPrimeiro`, `testPersonagensVelocidadeEmpatada`.
+
+---
+
+#### **8.3.2.2. Cálculo de Evasão**
+- **Descrição**: Validar se a evasão ocorre corretamente com base na diferença de Velocidade entre os personagens.
+- **Casos Testados**:
+  - Evasão ocorre (chance válida).
+  - Evasão não ocorre (chance insuficiente).
+- **Métodos**: `testDefensorEvadiu`, `testDefensorNaoEvadiu`, `testDefensorNaoEvadiuComChanceZero`.
+
+---
+
+#### **8.3.2.3. Cálculo de Dano**
+
+**Golpe Crítico:**
+- **Descrição**: Validar o cálculo de dano quando ocorre golpe crítico.
+- **Entrada**: Modificador de ataque = 0.8.
+- **Resultado Esperado**: Dano multiplicado por 1.5.
+- **Método**: `testarGolpeCritico`.
+
+**Dano Normal:**
+- **Descrição**: Validar o cálculo de dano sem golpe crítico.
+- **Entrada**: Modificador de ataque = 0.8.
+- **Resultado Esperado**: Dano calculado sem multiplicação.
+- **Método**: `testarGolpeNaoCritico`.
+
+---
+
+#### **8.3.2.4. Verificação de Vencedor**
+- **Descrição**: Determinar o vencedor da batalha quando o HP de um personagem chega a 0.
+- **Casos Testados**:
+  - P1 vence.
+  - P2 vence.
+  - Nenhum vencedor (ambos com HP > 0).
+- **Métodos**: `testPersonagem1Vencedor`, `testPersonagem2Vencedor`, `testNaoTemVencedor`.
+
+---
 
 ## 9. Cobertura de Testes
 
@@ -291,6 +422,8 @@ O projeto utiliza as seguintes dependências para testes e cobertura de código:
   - Cobertura de instruções: 72%.
 
 _Obsevação: a porcentagem de cobertura acima não atingiu a máxima devido as classes auxiliares `Main` e `Interface` que são classes usadas para rodar a demonstração do programa e exibir a interface para o usuário via terminal, respectivamente._
+
+---
 
 ## 10. Critério MC/DC
 
@@ -331,5 +464,7 @@ Os casos de teste implementados garantem a cobertura MC/DC, conforme descrito a 
 
 3. **Casos de Teste Práticos**:
    Os valores utilizados nos testes foram escolhidos para refletir cenários realistas no contexto do projeto, garantindo que os resultados não apenas cubram MC/DC, mas também sejam úteis para validar a lógica do sistema.
+
+---
 
 ## 11. Rastreabilidade

@@ -287,15 +287,49 @@ O projeto utiliza as seguintes dependências para testes e cobertura de código:
 
 - Ferramenta utilizada: JaCoCo.
 - **Cobertura alcançada**:
-  - Cobertura de arestas: 79%.
-  - Cobertura de instruções: 73%.
+  - Cobertura de arestas: 83%.
+  - Cobertura de instruções: 72%.
 
-_OBS: a porcentagem de cobertura acima não atingiu a máxima devido a conflitos nas regras de negócios para as classes de Assassino e Guerreiro, as quais requeriam que Ataque e velocidade fossem iguais e Ataque e resistencia_
+_Obsevação: a porcentagem de cobertura acima não atingiu a máxima devido as classes auxiliares `Main` e `Interface` que são classes usadas para rodar a demonstração do programa e exibir a interface para o usuário via terminal, respectivamente._
 
 ## 10. Critério MC/DC
 
 ### 10.1. If mais complexo
 
+O `if` mais complexo do projeto é o seguinte:
+
+```java
+if (ataque < 3 || defesa < 3 || velocidade < 3 || resistencia < 3)
+```
+
+Este `if` verifica se qualquer um dos atributos do personagem é menor que 3, indicando que as condições mínimas para um personagem válido não foram atendidas. A estrutura utiliza operadores lógicos OR (||), onde o resultado é verdadeiro se pelo menos uma das condições for verdadeira.
+
 ### 10.2. Casos de Teste
+
+Para satisfazer o critério MC/DC (Modified Condition/Decision Coverage), criamos casos de teste que garantem:
+
+- Cada condição é avaliada como **verdadeira** e **falsa**.
+- O resultado do `if` depende exclusivamente de cada condição avaliada.
+
+A tabela a seguir mostra os casos de teste planejados:
+
+| Teste | C1 (ataque < 3) | C2 (defesa < 3) | C3 (velocidade < 3) | C4 (resistencia < 3) | Resultado |
+| ----- | --------------- | --------------- | ------------------- | -------------------- | --------- |
+| T1    | **true**        | false           | false               | false                | true      |
+| T2    | false           | **true**        | false               | false                | true      |
+| T3    | false           | false           | **true**            | false                | true      |
+| T4    | false           | false           | false               | **true**             | true      |
+| T5    | false           | false           | false               | false                | false     |
+
+Os casos de teste implementados garantem a cobertura MC/DC, conforme descrito a seguir:
+
+1. **Independência das Condições**:
+   Cada condição é testada como verdadeira, enquanto todas as outras são falsas. Isso demonstra que cada condição isoladamente pode determinar o resultado do `if`.
+
+2. **Cobertura Completa**:
+   O caso T5 cobre o cenário onde todas as condições são falsas, validando que o resultado é **falso** apenas quando nenhuma das condições é satisfeita.
+
+3. **Casos de Teste Práticos**:
+   Os valores utilizados nos testes foram escolhidos para refletir cenários realistas no contexto do projeto, garantindo que os resultados não apenas cubram MC/DC, mas também sejam úteis para validar a lógica do sistema.
 
 ## 11. Rastreabilidade

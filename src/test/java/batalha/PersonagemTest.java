@@ -14,11 +14,11 @@ public class PersonagemTest {
 
     @ParameterizedTest
     @CsvSource({
-            "2, 5, 5, 5",    // ataque < 3 = true, defesa < 3 = false, velocidade < 3 = false, resistencia < 3 = false
-            "5, 2, 5, 5",    // ataque < 3 = false, defesa < 3 = true, velocidade < 3 = false, resistencia < 3 = false
-            "5, 5, 2, 5",    // ataque < 3 = false, defesa < 3 = false, velocidade < 3 = true, resistencia < 3 = false
-            "5, 5, 5, 2",    // ataque < 3 = false, defesa < 3 = false, velocidade < 3 = false, resistencia < 3 = true
-            "5, 5, 5, 5"     // ataque < 3 = false, defesa < 3 = false, velocidade < 3 = false, resistencia < 3 = false
+            "2, 5, 5, 5",    // T1: C1 = true, C2 = false, C3 = false, C4 = false
+            "5, 2, 5, 5",    // T2: C1 = false, C2 = true, C3 = false, C4 = false
+            "5, 5, 2, 5",    // T3: C1 = false, C2 = false, C3 = true, C4 = false
+            "5, 5, 5, 2",    // T4: C1 = false, C2 = false, C3 = false, C4 = true
+            "5, 5, 5, 5"     // T5: C1 = false, C2 = false, C3 = false, C4 = false
     })
     void testMC_DCAtributosMinimosPersonagem(int ataque, int defesa, int velocidade, int resistencia) {
         boolean result = verificarAtributosMinimosPersonagem(ataque, defesa, velocidade, resistencia);

@@ -6,14 +6,10 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class PersonagemTest {
+public class PersonagemTest {
 
     @ParameterizedTest
     @CsvSource({
-            "2, 6, 6, 6",    // Ataque < 3
-            "6, 2, 6, 6",    // Defesa < 3
-            "6, 6, 2, 6",    // Velocidade < 3
-            "6, 6, 6, 2",    // Resistencia < 3
             "5, 4, 6, 5",    // Ataque < Velocidade
             "6, 4, 5, 5",    // Velocidade < Ataque
             "5, 6, 4, 5",    // Defesa > Ataque
@@ -54,10 +50,6 @@ class PersonagemTest {
 
     @ParameterizedTest
     @CsvSource({
-            "2, 6, 6, 6",    // Ataque < 3
-            "6, 2, 6, 6",    // Defesa < 3
-            "6, 6, 2, 6",    // Velocidade < 3
-            "6, 6, 6, 2",    // Resistencia < 3
             "7, 4, 4, 5",    // Resistencia < Ataque
             "5, 4, 4, 7",    // Ataque < Resistencia
             "5, 7, 3, 5",    // Defesa > Resistencia
@@ -96,7 +88,6 @@ class PersonagemTest {
         }, "Nao esperava excecao para os atributos fornecidos.");
     }
 
-
     @ParameterizedTest
     @CsvSource({
             "5, 5, 4, 5",    // Soma < 20
@@ -111,14 +102,63 @@ class PersonagemTest {
                     .comResistencia(resistencia)
                     .doTipoGuerreiro();
         }, "Esperava excecao para os atributos fornecidos.");
+    }
 
-        assertThrows(IllegalStateException.class, () -> {
+    @ParameterizedTest
+    @CsvSource({
+            "5, 5, 5, 5",    // Soma = 20
+            "6, 4, 6, 4",    // Soma = 20
+            "6, 5, 6, 3",    // Soma = 20
+            "6, 3, 6, 5",    // Soma = 20
+    })
+    void testSomaAtributosPersonagemValidas(int ataque, int defesa, int velocidade, int resistencia) {
+        assertDoesNotThrow(() -> {
             PersonagemBuilder.construaUmPersonagem()
                     .comAtaque(ataque)
                     .comDefesa(defesa)
                     .comVelocidade(velocidade)
                     .comResistencia(resistencia)
                     .doTipoAssassino();
-        }, "Esperava excecao para os atributos fornecidos.");
+        }, "Nao esperava excecao para os atributos fornecidos.");
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            "2, 6, 6, 6",    // Ataque < 3
+            "6, 2, 6, 6",    // Defesa < 3
+            "6, 6, 2, 6",    // Velocidade < 3
+            "6, 6, 6, 2",    // Resistencia < 3
+
+    })
+    void testPersonagemAtributoValorMinimoInvalido(int ataque, int defesa, int velocidade, int resistencia) {
+        assertThrows(IllegalArgumentException.class, () -> {
+            PersonagemBuilder.construaUmPersonagem()
+                    .comAtaque(ataque)
+                    .comDefesa(defesa)
+                    .comVelocidade(velocidade)
+                    .comResistencia(resistencia)
+                    .doTipoGuerreiro();
+        });
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            "7, 3, 3, 7",
+            "6, 5, 3, 6",
+            "6, 4, 4, 6",
+            "6, 5, 3, 6",
+            "5, 5, 5, 5"
+    })
+    void testPersonagemAtributoValorMinimoValidos(int ataque, int defesa, int velocidade, int resistencia) {
+        assertDoesNotThrow(() -> {
+            PersonagemBuilder.construaUmPersonagem()
+                    .comAtaque(ataque)
+                    .comDefesa(defesa)
+                    .comVelocidade(velocidade)
+                    .comResistencia(resistencia)
+                    .doTipoGuerreiro();
+        }, "Nao esperava excecao para os atributos fornecidos.");
     }
 }

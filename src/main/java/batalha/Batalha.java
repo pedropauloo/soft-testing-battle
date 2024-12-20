@@ -44,6 +44,10 @@ public class Batalha {
         return Math.max(chanceEvasao, 0);
     }
 
+    static boolean evadiu(int chanceEvasao, int randomico) {
+        return randomico <= chanceEvasao;
+    }
+
     public void realizarPrimeiroAtaque() {
         realizarAtaque(primeiroAtacante, segundoAtacante);
     }
@@ -56,8 +60,7 @@ public class Batalha {
         int chanceEvasao = calcularChanceEvasao(atacante, defensor);
         int randomicoEvasao = geradorRandomico.nextInt(100);
 
-
-        if (this.evadiu(chanceEvasao, randomicoEvasao)) {
+        if (evadiu(chanceEvasao, randomicoEvasao)) {
             Interface.exibirEvasao(atacante, defensor);
             return false;
         } else {
@@ -71,11 +74,6 @@ public class Batalha {
             // Informar que atacante atacou defensor
             return true;
         }
-    }
-
-
-    boolean evadiu(int chanceEvasao, int randomico) {
-        return randomico <= chanceEvasao;
     }
 
     int calcularChanceEvasao(Personagem atacante, Personagem defensor) {
